@@ -1,11 +1,6 @@
-# handlers.py
-import telebot
-from config import TOKEN
 from utils import generate_food_place
+from bot_instance import bot
 
-bot = telebot.TeleBot(TOKEN)
-
-@bot.message_handler(commands=['start', 'hello'])
 def start(message):
     welcome_message = (
         "Hello!  Welcome to the Novena Lunch Generator.\n\n"
@@ -14,7 +9,6 @@ def start(message):
     )
     bot.send_message(message.chat.id, welcome_message)
 
-@bot.message_handler(commands=['help'])
 def help(message):
     help_message = (
         "Here are the commands you can use:\n\n"
@@ -25,7 +19,7 @@ def help(message):
     )
     bot.send_message(message.chat.id, help_message)
 
-@bot.message_handler(commands=['generate'])
+
 def generatePlace(message):
     place_response = generate_food_place()  # This should return the JSON response from your API
     if place_response:
@@ -38,13 +32,11 @@ def generatePlace(message):
 
         # Formatting the response message
         response_message = f"{location} - {name}, {is_halal}, {is_vegetarian}"
-        bot.reply_to(message, response_message)
+        bot.send_message(message.chat.id , response_message)
     else:
         # Handle cases where the response is empty or not as expected
         bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
 
-
-@bot.message_handler(func=lambda m: True)
 def handle_unrecognized_command(message):
     response = (
         """
