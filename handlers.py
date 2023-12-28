@@ -40,13 +40,14 @@ def generatePlace(message):
 def handle_unrecognized_command(message):
     response = (
         """
-        Oops! I didn't recognize that command.
+            Oops! I didn't recognize that command.
         
-        Here's what I can help you with:
-        /start - Get started and learn more about this bot.
-        /help - Display the help message with command details.
-        /generate - Generate a random food place suggestion.
+            Here's what I can help you with:
+            /start - Get started and learn more about this bot.
+            /help - Display the help message with command details.
+            /generate - Generate a random food place suggestion.
 
-        If you need help or have questions, just type /help."""
+            If you need help or have questions, just type /help.
+        """
     )
     bot.reply_to(message, response)
