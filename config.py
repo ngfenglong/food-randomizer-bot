@@ -1,9 +1,13 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 
-# Load environment variables
-dotenv_path = find_dotenv()
-load_dotenv(dotenv_path)
+# Check if the ENV variable is set to 'production'
+# Load environment variables from .env file if not in production
+if os.getenv('ENV') != 'production':
+    from dotenv import load_dotenv
+    dotenv_path = find_dotenv()
+    load_dotenv(dotenv_path)
+
 
 TOKEN = os.getenv("TELEGRAM_API_KEY")
 BASEURL = os.getenv("API_URL")
