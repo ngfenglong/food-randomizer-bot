@@ -3,19 +3,26 @@ from bot_instance import bot
 
 def start(message):
     welcome_message = (
-        "Hello!  Welcome to the Novena Lunch Generator.\n\n"
-        "I'm here to help you decide on a place to eat for your next meal."
-        "Simply use the commands below to interact with me. Let's make lunch decisions easier!"
+       "Hello! Welcome to Time-To-Makan.\n\n"
+        "I'm here to assist you in discovering great places to eat. Here's what I can do:\n"
+        "- Suggest random places for your next meal with /generate.\n"
+        "- Provide helpful information with /help.\n"
+        "For Admins:\n"
+        "- Access admin functions with /admin_menu.\n\n"
+        "Start by typing a command or use /help to see all options!"
     )
     bot.send_message(message.chat.id, welcome_message)
 
 def help(message):
     help_message = (
-        "Here are the commands you can use:\n\n"
-        "/start - Welcome message and bot instructions.\n"
-        "/help - Get detailed information about how to use this bot.\n"
-        "/generate - Receive a random food place suggestion based on your preferences.\n\n"
-        "Just type a command to get started. If you need any assistance, feel free to use the /help command anytime!"
+        "Time-To-Makan Bot Commands:\n\n"
+        "/start - Learn about the bot and get started.\n"
+        "/help - View this help message anytime.\n"
+        "/generate - Get a random food place suggestion.\n"
+        "/request_admin_access - Request admin privileges.\n"
+        "Admins only:\n"
+        "/admin_menu - Access admin-specific functions.\n\n"
+        "Just type a command to begin. Need assistance? Use /help!"
     )
     bot.send_message(message.chat.id, help_message)
 
@@ -40,14 +47,13 @@ def generatePlace(message):
 def handle_unrecognized_command(message):
     response = (
         """
-            Oops! I didn't recognize that command.
-        
-            Here's what I can help you with:
-            /start - Get started and learn more about this bot.
-            /help - Display the help message with command details.
-            /generate - Generate a random food place suggestion.
-
-            If you need help or have questions, just type /help.
+            I'm not sure I understand that command.\n
+            Here are some things I can do for you:
+            - /start: Discover what Time-To-Makan can offer.
+            - /help: Get a list of available commands.
+            - /generate: Receive a random suggestion for your next meal.\n
+            Admins can use /admin_menu to access admin features.
+            Need more assistance? Just type /help!
         """
     )
     bot.reply_to(message, response)

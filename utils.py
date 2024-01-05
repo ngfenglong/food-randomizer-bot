@@ -16,7 +16,6 @@ def fetch_all_places():
 
     return response.json()
 
-
 def fetch_all_categories(): 
     url = BASEURL + "/v1/admin/categories"
     response = requests.get(url)
@@ -58,18 +57,24 @@ def format_places(places_response):
 
     return "\n".join(formatted_places)
 
+def delete_place_api(id):
+    url = BASEURL + "/v1/admin/deletePlace/" + id
+    response = requests.get(url)
 
-def add_place_api(name, description, category_id, is_halal, is_vegetarian, location_id):
+    return response.json()
+
+def add_place_api(name, description, category, is_halal, is_vegetarian, location):
+
     url = BASEURL + "/v1/admin/updatePlace"
     headers = {"Content-Type": "application/json"}
     data = {
         "id": 0,  
         "name": name,
         "description": description,
-        "category": str(category_id),
+        "category": str(category),
         "is_halal": is_halal,
         "is_vegetarian": is_vegetarian,
-        "location": str(location_id)
+        "location": str(location)
     }
     
     response = requests.post(url, headers=headers, data=json.dumps(data))
