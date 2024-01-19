@@ -1,4 +1,4 @@
-from utils import generate_food_place
+from utils import generate_food_place, request_admin_api
 from bot_instance import bot
 
 def start(message):
@@ -57,3 +57,19 @@ def handle_unrecognized_command(message):
         """
     )
     bot.reply_to(message, response)
+
+
+def request_admin(message): 
+    try: 
+        id = message.chat.id
+        username  = message.chat.username
+
+        response = request_admin_api(id, username)
+        print(response)
+        if response.get('error'):
+            bot.send_message(message.from_user.id, f"{response.get('error').get('message')}")
+        else:
+            bot.send_message(message.from_user.id, "Request sent successfully!")
+    except Exception as e: 
+        bot.send_message(message.from_user.id, "An unexpected error occurred. Please try again.")
+        return
