@@ -64,7 +64,6 @@ def delete_place_api(id):
     return response.json()
 
 def add_place_api(name, description, category, is_halal, is_vegetarian, location):
-
     url = BASEURL + "/v1/admin/updatePlace"
     headers = {"Content-Type": "application/json"}
     data = {
@@ -78,4 +77,16 @@ def add_place_api(name, description, category, is_halal, is_vegetarian, location
     }
     
     response = requests.post(url, headers=headers, data=json.dumps(data))
+    return response.json()
+
+
+def request_admin_api(id, username):
+    url = BASEURL + '/v1/auth/requestAccess'
+    headers = {"Content-Type": "application/json"}
+    data = {
+        "telegram_id" : str(id),
+        "telegram_username": username
+    }
+
+    response = requests.post(url, headers = headers, data=json.dumps(data))
     return response.json()

@@ -102,3 +102,45 @@ def process_delete_place (message):
         bot.reply_to(message, "You have entered an invalid ID. Please try again.")
         return
 
+
+def view_category(message):
+    return 
+def add_category(message):
+    return 
+def delete_category(message):
+    return 
+def view_location(message):
+    return 
+def add_location(message):
+    return 
+def delete_location(message):
+    return 
+
+
+# Handle txt file upload
+def handle_document(message): 
+    if message.document.mime_type == 'text/plain':
+        process_place_file(message)
+    else:
+        bot.reply_to(message, "Please upload a text file.")
+
+def process_place_file(message):
+    file_info = bot.get_file(message.document.file_id)
+    downloaded_file = bot.download_file(file_info.file_path)
+
+    # Assuming the file contains one place per line, formatted as:
+    # name, description, category, is_halal, is_vegetarian, location
+    for line in downloaded_file.decode('utf-8').split('\n'):
+        if line.strip():
+            try:
+                name, description, category, is_halal, is_vegetarian, location = line.split(', ')
+                # Convert and validate data if necessary
+                is_halal = is_halal.lower() == 'true'
+                is_vegetarian = is_vegetarian.lower() == 'true'
+                
+                # Call your API to add the place
+                # add_place_api(name, description, category, is_halal, is_vegetarian, location)
+            except ValueError:
+                bot.reply_to(message, f"Invalid format in line: {line}")
+                return
+    bot.reply_to(message, "Places added successfully.")
