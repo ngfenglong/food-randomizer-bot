@@ -63,17 +63,17 @@ def delete_place_api(id):
 
     return response.json()
 
-def add_place_api(name, description, category, is_halal, is_vegetarian, location):
+def add_place_api(id, name, description, category, is_halal, is_vegetarian, location):
     url = BASEURL + "/v1/admin/updatePlace"
     headers = {"Content-Type": "application/json"}
     data = {
-        "id": 0,  
+        "id": int(id),
         "name": name,
         "description": description,
-        "category": str(category),
+        "category": category,
         "is_halal": is_halal,
         "is_vegetarian": is_vegetarian,
-        "location": str(location)
+        "location": location
     }
     
     response = requests.post(url, headers=headers, data=json.dumps(data))

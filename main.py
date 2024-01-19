@@ -3,7 +3,8 @@ from admin_handlers import (
     admin_menu, view_places, add_place, delete_place, 
     category_callback, location_callback, handle_document,
     view_category, add_category, delete_category, 
-    view_location, add_location, delete_location
+    view_location, add_location, delete_location, 
+    export_places_handler
 )
 
 # Initialize the bot instance
@@ -22,6 +23,7 @@ bot.register_message_handler(view_places, commands=['view_places'])
 bot.register_message_handler(delete_place, commands=['delete_place'])
 bot.register_message_handler(add_place, commands=['add_place'])
 bot.register_message_handler(handle_document, content_types=['document'])
+bot.register_message_handler(export_places_handler, commands=['export_places'])
 
 # Category and Location Handlers
 bot.register_message_handler(view_category, commands=['view_category'])
