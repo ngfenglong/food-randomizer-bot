@@ -10,6 +10,18 @@ def generate_food_place():
 
     return response.json()
 
+def generate_halal_food_place():
+    url = BASEURL + "/v1/generatePlace?is_halal=true"
+    response = requests.get(url)
+
+    return response.json()
+
+def generate_vegetarian_food_place():
+    url = BASEURL + "/v1/generatePlace?is_vegetarian=true"
+    response = requests.get(url)
+
+    return response.json()
+
 def fetch_all_places(): 
     url = BASEURL + "/v1/places"
     response = requests.get(url)

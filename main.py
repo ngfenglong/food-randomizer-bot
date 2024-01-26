@@ -1,4 +1,4 @@
-from handlers import start, help, generatePlace, handle_unrecognized_command, request_admin
+from handlers import start, help, generatePlace, handle_unrecognized_command, request_admin, generateHalalPlace, generateVegetarianPlace
 from admin_handlers import (
     admin_menu, view_places, add_place, delete_place, 
     category_callback, location_callback, handle_document,
@@ -15,6 +15,8 @@ from bot_instance import bot
 bot.register_message_handler(start, commands=['start', 'hello'])
 bot.register_message_handler(help, commands=['help'])
 bot.register_message_handler(generatePlace, commands=['generate'])
+bot.register_message_handler(generateHalalPlace, commands=['generate_halal'])
+bot.register_message_handler(generateVegetarianPlace, commands=['generate_vegetarian'])
 bot.register_message_handler(request_admin, commands=['request_admin_access'])
 
 # Admin Handlers 
