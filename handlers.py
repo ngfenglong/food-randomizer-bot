@@ -1,4 +1,4 @@
-from utils import generate_food_place, request_admin_api
+from utils import generate_food_place, request_admin_api, generate_halal_food_place, generate_vegetarian_food_place
 from bot_instance import bot
 
 def start(message):
@@ -6,6 +6,8 @@ def start(message):
        "Hello! Welcome to Time-To-Makan.\n\n"
         "I'm here to assist you in discovering great places to eat. Here's what I can do:\n"
         "- Suggest random places for your next meal with /generate.\n"
+        "- Suggest Halal places with /generate_halal.\n"
+        "- Suggest Vegetarian places with /generate_vegetarian.\n"
         "- Provide helpful information with /help.\n"
         "For Admins:\n"
         "- Access admin functions with /admin_menu.\n\n"
@@ -19,6 +21,8 @@ def help(message):
         "/start - Learn about the bot and get started.\n"
         "/help - View this help message anytime.\n"
         "/generate - Get a random food place suggestion.\n"
+        "/generate_halal - Get a Halal food place suggestion.\n"
+        "/generate_vegetarian - Get a Vegetarian food place suggestion.\n"
         "/request_admin_access - Request admin privileges.\n"
         "Admins only:\n"
         "/admin_menu - Access admin-specific functions.\n\n"
@@ -43,6 +47,41 @@ def generatePlace(message):
     else:
         # Handle cases where the response is empty or not as expected
         bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
+
+def generateHalalPlace(message):
+    place_response = generate_halal_food_place()  
+    if place_response:
+        # Extracting the required fields from the response
+        place = place_response.get('place', {})
+        location = place.get('location', 'No location info')
+        name = place.get('name', 'Unknown')
+        is_halal = "Halal" if place.get('is_halal') else "Not Halal"
+        is_vegetarian = "Vegetarian" if place.get('is_vegetarian') else "Non-Vegetarian"
+
+        # Formatting the response message
+        response_message = f"{location} - {name}, {is_halal}, {is_vegetarian}"
+        bot.send_message(message.chat.id , response_message)
+    else:
+        # Handle cases where the response is empty or not as expected
+        bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
+
+def generateVegetarianPlace(message):
+    place_response = generate_vegetarian_food_place()  
+    if place_response:
+        # Extracting the required fields from the response
+        place = place_response.get('place', {})
+        location = place.get('location', 'No location info')
+        name = place.get('name', 'Unknown')
+        is_halal = "Halal" if place.get('is_halal') else "Not Halal"
+        is_vegetarian = "Vegetarian" if place.get('is_vegetarian') else "Non-Vegetarian"
+
+        # Formatting the response message
+        response_message = f"{location} - {name}, {is_halal}, {is_vegetarian}"
+        bot.send_message(message.chat.id , response_message)
+    else:
+        # Handle cases where the response is empty or not as expected
+        bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
+
 
 def handle_unrecognized_command(message):
     response = (
