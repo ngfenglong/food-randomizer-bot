@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 
 from config import BASEURL
 

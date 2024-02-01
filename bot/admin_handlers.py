@@ -1,17 +1,16 @@
 import csv
 import io
 from telebot import types
-from config import ADMIN_USER_IDS, TOKEN
-import telebot
-from utils import fetch_all_places, format_places, fetch_all_categories, fetch_all_locations, add_place_api, delete_place_api
+from config import settings
+from . import utils 
 
 # Initialize the bot instance
-from bot_instance import bot
+from . import bot
 
 unauthorise_message = "You are not authorized to access admin functions."
 
 def is_user_admin(user_id):
-    return user_id in ADMIN_USER_IDS
+    return user_id in settings.ADMIN_USER_IDS
 
 
 def admin_menu(message):
@@ -31,8 +30,8 @@ def view_places(message):
         bot.reply_to(message, unauthorise_message)
         return
 
-    places = fetch_all_places()  
-    formatted_response = format_places(places)  
+    places = utils.fetch_all_places()  
+    formatted_response = utils.format_places(places)  
     bot.send_message(message.chat.id, formatted_response)
 
 def add_place(message):
@@ -44,7 +43,7 @@ def add_place(message):
     bot.send_message(message.chat.id, "Please select a category:", reply_markup=get_categories_markup())
 
 def get_categories_markup():
-    categories = fetch_all_categories()  
+    categories = utils.fetch_all_categories()  
     markup = types.InlineKeyboardMarkup()
     for category in categories:
         markup.add(types.InlineKeyboardButton(category['category_name'], callback_data=f"cat_{category['category_name']}"))
@@ -58,7 +57,7 @@ def category_callback(call):
 
 
 def get_locations_markup(category):
-    locations = fetch_all_locations()  
+    locations = utils.fetch_all_locations()  
     markup = types.InlineKeyboardMarkup()
     for location in locations:
         markup.add(types.InlineKeyboardButton(location['location_name'], callback_data=f"loc_{location['location_name']}_{category}"))
@@ -79,7 +78,7 @@ def process_place_details(message, category, location):
         is_vegetarian = is_vegetarian.lower() == 'true'
         
         
-        add_place_api(name, description, category, is_halal, is_vegetarian, location)
+        utils.add_place_api(name, description, category, is_halal, is_vegetarian, location)
 
         bot.reply_to(message, "Place added successfully!")
     except Exception as e:
@@ -98,7 +97,7 @@ def delete_place(message):
 def process_delete_place (message):
     try: 
         id = message.text
-        delete_place_api(id)
+        utils.delete_place_api(id)
 
         bot.reply_to(message, "Place deleted successfully")
     except Exception as e:
@@ -149,7 +148,7 @@ def process_place_file(message):
             is_vegetarian = row['is_vegetarian'].lower().strip() == 'true'
 
             # Call your API to add the place
-            add_place_api(row['id'].strip(), row['name'].strip(), row['description'].strip(),
+            utils.add_place_api(row['id'].strip(), row['name'].strip(), row['description'].strip(),
                         row['category'].strip(), is_halal, is_vegetarian, row['location'].strip())
 
         bot.reply_to(message, "Places updated successfully.")
@@ -168,7 +167,7 @@ def export_places_handler(message):
         return
 
     try:
-        data = fetch_all_places()
+        data = utils.fetch_all_places()
         places = data.get('places')
         csv_buffer = format_places_for_export(places)
         
