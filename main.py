@@ -10,7 +10,6 @@ bot.register_message_handler(handlers.request_admin, commands=['request_admin_ac
 
 # Admin Handlers 
 bot.register_message_handler(admin_handlers.admin_menu, commands=['admin_menu'])
-bot.register_message_handler(admin_handlers.view_places, commands=['view_places'])
 bot.register_message_handler(admin_handlers.delete_place, commands=['delete_place'])
 bot.register_message_handler(admin_handlers.add_place, commands=['add_place'])
 bot.register_message_handler(admin_handlers.handle_document, content_types=['document'])
