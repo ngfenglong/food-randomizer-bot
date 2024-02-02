@@ -97,9 +97,13 @@ def delete_place(message):
 def process_delete_place (message):
     try: 
         id = message.text
-        utils.delete_place_api(id)
+        response = utils.delete_place_api(id)
 
-        bot.reply_to(message, "Place deleted successfully")
+        if response.get('error'):
+            bot.send_message(message.from_user.id, f"You have entered an invalid ID. Please try again.")
+        else:
+            bot.reply_to(message, "Place deleted successfully")
+
     except Exception as e:
         bot.reply_to(message, "You have entered an invalid ID. Please try again.")
         return
