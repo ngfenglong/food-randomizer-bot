@@ -1,5 +1,5 @@
-from utils import generate_food_place, request_admin_api, generate_halal_food_place, generate_vegetarian_food_place
-from bot_instance import bot
+from . import utils 
+from . import bot
 
 def start(message):
     welcome_message = (
@@ -32,7 +32,7 @@ def help(message):
 
 
 def generatePlace(message):
-    place_response = generate_food_place()  # This should return the JSON response from your API
+    place_response = utils.generate_food_place()  # This should return the JSON response from your API
     if place_response:
         # Extracting the required fields from the response
         place = place_response.get('place', {})
@@ -49,7 +49,7 @@ def generatePlace(message):
         bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
 
 def generateHalalPlace(message):
-    place_response = generate_halal_food_place()  
+    place_response = utils.generate_halal_food_place()  
     if place_response:
         # Extracting the required fields from the response
         place = place_response.get('place', {})
@@ -66,7 +66,7 @@ def generateHalalPlace(message):
         bot.reply_to(message, "Sorry, I couldn't find a food place suggestion at the moment.")
 
 def generateVegetarianPlace(message):
-    place_response = generate_vegetarian_food_place()  
+    place_response = utils.generate_vegetarian_food_place()  
     if place_response:
         # Extracting the required fields from the response
         place = place_response.get('place', {})
@@ -103,7 +103,7 @@ def request_admin(message):
         id = message.chat.id
         username  = message.chat.username
 
-        response = request_admin_api(id, username)
+        response = utils.request_admin_api(id, username)
         print(response)
         if response.get('error'):
             bot.send_message(message.from_user.id, f"{response.get('error').get('message')}")
