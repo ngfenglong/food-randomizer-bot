@@ -19,7 +19,6 @@ def admin_menu(message):
         return
 
     menu_message = "Admin Menu:\n" \
-                   "/view_places - View all places\n" \
                    "/add_place - Add a new place\n" \
                    "/delete_place - Delete a place\n" \
                    "/export_places - Export all places to a text file\n" 
