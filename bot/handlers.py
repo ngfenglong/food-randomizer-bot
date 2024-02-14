@@ -25,7 +25,7 @@ def help(message):
         "/generate_vegetarian - Get a Vegetarian food place suggestion.\n"
         "/request_admin_access - Request admin privileges.\n"
         "Admins only:\n"
-        "/admin_menu - Access admin-specific functions.\n\n"
+        "/admin_menu - Access admin-specific functions. \n\n"
         "Just type a command to begin. Need assistance? Use /help!"
     )
     bot.send_message(message.chat.id, help_message)
