@@ -19,7 +19,13 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker stop ttm-bot-app
+            if [ $(docker ps -a -q -f name=ttm-bot-app | wc -l) -gt 0 ]; then
+              echo "Container exists, stopping and removing..."
+              docker stop ttm-bot-app
+              docker rm ttm-bot-app
+            else
+              echo "Container does not exist, no need to stop or remove."
+            fi
             cd food-randomizer-bot/
             git pull
             docker rmi ttm-bot
