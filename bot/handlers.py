@@ -51,7 +51,7 @@ def generatePlace(message):
 def generateHalalPlace(message):
     place_response = utils.generate_halal_food_place()  
     if place_response:
-        # Extracting the required fields from the response
+        # Extracting the required fields from the response 
         place = place_response.get('place', {})
         location = place.get('location', 'No location info')
         name = place.get('name', 'Unknown')
